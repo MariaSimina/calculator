@@ -5,6 +5,7 @@ const clear = document.querySelector("#clear");
 
 let displayNumber = "";
 let total = 0;
+let operatorButton = "+";
 
 numbers.forEach((number) => {
     number.addEventListener('click', () => {
@@ -13,14 +14,15 @@ numbers.forEach((number) => {
     })
 });
 
-operators.forEach((operatorButton) => {
-    operatorButton.addEventListener('click', () => {
+operators.forEach((operator) => {
+    operator.addEventListener('click', () => {
         let number = Number(displayNumber);
-        let operator = operatorButton.id;
-        let result = operate(operator, total, number);
-        console.log(result);
-        display.textContent = result;
+        let result = operate(operatorButton, total, number);
+        if(operator.id !== "=") {
+            operatorButton = operator.id;
+        }
         total = result;
+        display.textContent = result;
         displayNumber = "";
     })
 });
@@ -29,6 +31,7 @@ clear.addEventListener('click', () => {
     display.textContent = "";
     displayNumber = "";
     total = 0;
+    operatorButton = "+";
 });
 
 function add(num1, num2) {
@@ -40,8 +43,6 @@ function subtract(num1, num2) {
 }
 
 function multiply(num1, num2) {
-    console.log(num1);
-    console.log(num2);
     return Number(num1) * Number(num2);
 }
 
